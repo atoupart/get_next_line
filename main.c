@@ -1,29 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atoupart <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/02/08 13:31:21 by atoupart          #+#    #+#             */
-/*   Updated: 2016/02/09 18:10:31 by atoupart         ###   ########.fr       */
+/*   Created: 2016/02/09 17:39:54 by atoupart          #+#    #+#             */
+/*   Updated: 2016/02/09 18:10:42 by atoupart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "get_next_line.h"
 
-# include "libft/libft.h"
-# include <sys/stat.h>
-# include <sys/types.h>
-# include <fcntl.h>
+int			main(int argc, char **argv)
+{
+	int		i;
+	char	**line;
+	int		fd;
 
-# define BUF_SIZE 999
+	if ((fd = open(argv[1], O_RDONLY)) == -1)
+	{
+		pts("open error");
+		exit(EXIT_FAILURE);
+	}
+	i = -1;
+	while (++i < 10)
+	{
+		get_next_line(fd, line);
+	}
 
-# define ptn ft_putnbr
-# define pts ft_putstr
-# define ptcn ft_putchar('\n')
+	if (close(fd) == -1)
+	{
+		pts("close error");
+		exit(EXIT_FAILURE);
+	}
+	return (0);
+}
 
-int		get_next_line(int const fd, char **line);
-
-#endif
