@@ -6,7 +6,7 @@
 /*   By: atoupart <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/09 17:39:54 by atoupart          #+#    #+#             */
-/*   Updated: 2016/02/22 20:32:32 by atoupart         ###   ########.fr       */
+/*   Updated: 2016/02/22 23:01:10 by atoupart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int			main(int argc, char **argv)
 	}
 	get_next_line(fd, &line);
 	pts("get next line passe");ptcn;
-	// pts(*line);
+	pts(&*line);
 	if (close(fd) == -1)
 	{
 		pts("close error");exit(EXIT_FAILURE);

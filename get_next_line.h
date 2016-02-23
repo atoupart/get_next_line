@@ -6,7 +6,7 @@
 /*   By: atoupart <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/08 13:31:21 by atoupart          #+#    #+#             */
-/*   Updated: 2016/02/22 18:58:49 by atoupart         ###   ########.fr       */
+/*   Updated: 2016/02/23 18:44:46 by atoupart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 
 # define BUFF_SIZE 999
 
+# define ptc ft_putchar
 # define ptn ft_putnbr
 # define pts ft_putstr
 # define ptcn ft_putchar('\n')
