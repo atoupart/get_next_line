@@ -6,7 +6,7 @@
 /*   By: atoupart <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/08 13:31:21 by atoupart          #+#    #+#             */
-/*   Updated: 2016/02/23 18:44:46 by atoupart         ###   ########.fr       */
+/*   Updated: 2016/02/24 15:45:33 by atoupart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <sys/types.h>
 # include <fcntl.h>
 
-# define BUFF_SIZE 999
+# define BUFF_SIZE 100
 
 # define ptc ft_putchar
 # define ptn ft_putnbr

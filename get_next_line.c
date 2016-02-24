@@ -6,7 +6,7 @@
 /*   By: atoupart <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/08 13:27:21 by atoupart          #+#    #+#             */
-/*   Updated: 2016/02/23 19:26:31 by atoupart         ###   ########.fr       */
+/*   Updated: 2016/02/24 18:25:26 by atoupart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,73 @@
 
 int			get_next_line(int const fd, char **line)
 {
-	int		ret;
-	char	buf[BUFF_SIZE + 1];
-	int		x;
-	int		i;
+	int				ret;
+	char			buf[BUFF_SIZE + 1];
+	static char		*str;
+	static int		i;
 
 	i = -1;
-	while (fd)
+	while (1)
 	{
 		if ((ret = read(fd, buf, BUFF_SIZE)) == -1)
 			return (-1);
-		x = -1;
-		ptc('"');ptc(buf[ret - 2]);ptc('"');ptcn;
-		while (++x < ret)
-		{
-			if (buf[x] == '\n')
-				return (1);
-			if (buf[x] == 032)
-				return (0);
-			(*line)[++i] = buf[x];
-		}
+		ptn(ret);ptcn;
+		str = ft_strjoin(str, buf);
+		while (str[++i] != '\n')
+			(*line)[i] = str[i];
+		if (str[i] == '\n')
+			return (1);
+		return (0);
 	}
-	return (0);
 }
+ apres les multiples appel de gnl, static str a tout enregistrer
+ et c'est la decoupe de str par les \n  dans line que je dois aprofondir
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
