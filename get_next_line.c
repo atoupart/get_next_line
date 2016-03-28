@@ -22,8 +22,6 @@ int			get_next_line(int const fd, char **line)
 // gerer les cas d'erreurs //
 	if (line == NULL || !fd)
 		return (-1);
-	else
-		ft_strclr(*line);
 
 // verifier les \n  dans la static str avant de read //
 	// i = 0;
@@ -37,6 +35,7 @@ int			get_next_line(int const fd, char **line)
 	// 	return (1);
 	// }
 
+
 	buf = ft_strnew(BUFF_SIZE);
 	str = ft_strnew(0);
 	while ((ret = read(fd, buf, BUFF_SIZE) == BUFF_SIZE))
@@ -48,13 +47,13 @@ int			get_next_line(int const fd, char **line)
 	// if (ret != BUFF_SIZE && BUFF_SIZE != 1)
 	// 	str = ft_strjoin(str, buf);
 	i = -1;
+	*line = ft_strnew(ft_strlen(str));
 	if (ret == BUFF_SIZE)            // --------------sert uniquement a eviter de renvoyer '\n'
 		while(str[++i] != '\n')
 			(*line)[i] = str[i];
 	else
 		*line = str;
-	if ((*line)[0] == '\0')
+	if (*str == '\0')
 		return (0);
 	return (1);
 }
-

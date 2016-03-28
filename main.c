@@ -27,7 +27,7 @@ int			main(int argc, char **argv)
 	while ((recup = get_next_line(fd, &line)))
 	{
 		i++;
-		printf("line %d =\n''%s''\n\n", i, line);
+		pts("line ");ptn(i);pts(" =");ptcn;pts("''");pts(line);pte("''");;
 	}
 
 	close(fd);
