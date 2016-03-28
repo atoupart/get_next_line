@@ -22,100 +22,39 @@ int			get_next_line(int const fd, char **line)
 // gerer les cas d'erreurs //
 	if (line == NULL || !fd)
 		return (-1);
+	else
+		ft_strclr(*line);
 
 // verifier les \n  dans la static str avant de read //
-	i = 0;
-	if ((tmp = ft_strchr(str, '\n')))
-	{
-		while (str[i] != *tmp)
-		{
-			(*line)[i] = str[i];
-			i++;
-		}
-		return (1);
-	}
+	// i = 0;
+	// if (ft_strchr(str, '\n'))
+	// {
+	// 	while (str[i] != *tmp)
+	// 	{
+	// 		(*line)[i] = str[i];
+	// 		i++;
+	// 	}
+	// 	return (1);
+	// }
 
-// lancement boucle read //
 	buf = ft_strnew(BUFF_SIZE);
 	str = ft_strnew(0);
-	while ((ret = read(fd, buf, BUFF_SIZE)) ==  BUFF_SIZE)
+	while ((ret = read(fd, buf, BUFF_SIZE) == BUFF_SIZE))
 	{
-		i = 0;
-		if ((tmp = ft_strchr(buf, '\n')))
-		{
-			while (buf[i] != *tmp)
-			{
-				(*line)[i] = str[i];
-				i++;
-			}
-			return (1);
-		}
+		str = ft_strjoin(str, buf);   //peutetre ensuite strdel(buf);
+		if (ft_strchr(str, '\n'))
+			break ;
 	}
-	return (0);
+	// if (ret != BUFF_SIZE && BUFF_SIZE != 1)
+	// 	str = ft_strjoin(str, buf);
+	i = -1;
+	if (ret == BUFF_SIZE)            // --------------sert uniquement a eviter de renvoyer '\n'
+		while(str[++i] != '\n')
+			(*line)[i] = str[i];
+	else
+		*line = str;
+	if ((*line)[0] == '\0')
+		return (0);
+	return (1);
 }
-
-		
-/*
-	buf = ft_strnew(BUFF_SIZE);
-	str = ft_strnew(0); // static = init 0 auto (BSS)
-	ret = -1;
-	while (ret != 0)
-	{
-		if ((ret = read(fd, buf, BUFF_SIZE)) == -1)
-			return (-1);
-//		buf[ret] = '\0';
-		tmp = (char *)malloc(ft_strlen(str) + ret);
-		tmp = ft_strcpy(tmp, str);
-//		ft_strdel(&str);
-		str = ft_strcat(tmp, buf);
-		ft_strdel(&tmp);
-		pts(str);ptcn;
-	}
-	pts(str);ptcn;
-	return (0);
-}
-
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

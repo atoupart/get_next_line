@@ -15,41 +15,22 @@
 
 int			main(int argc, char **argv)
 {
-	int		i;
-	int 	x;
+	int		i = 0;
 	char	*line;
 	int		fd;
-	int		ret;
+	int		recup;
 
-	//if (!(line = (char*)ft_memalloc(sizeof(char) * BUFF_SIZE + 1)))
-	if (!(line = (char *)ft_strnew(BUFF_SIZE + 1)))
+	line = ft_strnew(BUFF_SIZE + 1);
+
+	fd = open(argv[1], O_RDONLY);
+	
+	while ((recup = get_next_line(fd, &line)))
 	{
-		pts("malloc * line error");
-		exit(EXIT_FAILURE);
+		i++;
+		printf("line %d =\n''%s''\n\n", i, line);
 	}
-	if ((fd = open(argv[1], O_RDONLY)) == -1)
-	{
-		pts("open error");
-		exit(EXIT_FAILURE);
-	}
-	// i = -1;
-	// x = 0;
-	// while (x++ <= 0)
-	// {
-	// 	i = get_next_line(fd, &line);
-	// 	if (i != 0)
-	// 	{
-	// 		pts(&*line);
-	// 		ptcn;
-	// 	}
-	// }
-	while ((ret = get_next_line(fd, &line)))
-		printf("ret = %d\n, line = %s\n\n", ret, line);
-	if (close(fd) == -1)
-	{
-		pts("close error");
-		exit(EXIT_FAILURE);
-	}
+
+	close(fd);
 	return (0);
 }
 
