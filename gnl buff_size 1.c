@@ -16,28 +16,15 @@ int			get_next_line(int const fd, char **line)
 {
 	int				ret;
 	char			*buf;
-	static char		*tmp;
+	char			*tmp;
 	static char		*str;
 	int				i;
 // gerer les cas d'erreurs //
-	if (line == NULL || fd < 0)
+	if (line == NULL || !fd)
 		return (-1);
 
-
 // verifier les \n  dans la static str avant de read //
-	i = 0;
-	if (tmp)
-	{
-		while (tmp == '\n')
-		{
-			if (*(tmp + 1) == '\n')    voici ou j'en suis.  get_next_line gere les lignes vide et j'en etait
-				a elucider ce changement
-			bouh !
-				*line = tmp;
-			return (1);
-		}
-		// str = tmp;
-	} 
+	// i = 0;
 	// if (ft_strchr(str, '\n'))
 	// {
 	// 	while (str[i] != *tmp)
@@ -50,31 +37,23 @@ int			get_next_line(int const fd, char **line)
 
 
 	buf = ft_strnew(BUFF_SIZE);
-	if (!str)
+	str = ft_strnew(0);
+	while ((ret = read(fd, buf, BUFF_SIZE) == BUFF_SIZE))
 	{
-		str = ft_strnew(0);
-	}
-// BOUCLE READ //
-	while ((ret = read(fd, buf, BUFF_SIZE)) == BUFF_SIZE)
-	{
-		if (ret == -1)
-			return (-1);
 		str = ft_strjoin(str, buf);   //peutetre ensuite strdel(buf);
-		if ((tmp = ft_strchr(str, '\n')))
+		if (ft_strchr(str, '\n'))
 			break ;
 	}
-
-//  FINALISATION TRANSFERT //
-	if (ret != 0)
+	if (ret != BUFF_SIZE && BUFF_SIZE != 1)
 		str = ft_strjoin(str, buf);
 	i = -1;
 	*line = ft_strnew(ft_strlen(str));
-	if (ret == BUFF_SIZE)              // --------------sert uniquement a eviter de renvoyer '\n'
+	if (ret == BUFF_SIZE)            // --------------sert uniquement a eviter de renvoyer '\n'
 		while(str[++i] != '\n')
 			(*line)[i] = str[i];
 	else
 		*line = str;
-	if (ret != BUFF_SIZE)
+	if (*str == '\0')
 		return (0);
 	return (1);
 }
