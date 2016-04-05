@@ -23,46 +23,47 @@ int			get_next_line(int const fd, char **line)
 		return (-1);
 
 
-// verifier les \n  dans la static str avant de read //
-	// if (str && ft_strchr(str, '\n'))
-	// {
-	// 	pte("pass");
-	// 	if (resolve_line(&str, line))
-	// 		return (1);
-	// }
-	if (str)
+	pte("un");
+	if (str && (tmp = ft_strchr(str, '\n')))
 	{
-		if ((tmp = ft_strchr(str, '\n')))
-		{
+			pte("trois");
 			*line = ft_strsub(str, 0, tmp - str);
+			pte("quatre");
 			str = ft_strsub(str, tmp - str, (str + ft_strlen(str)) - tmp);
+			pte("cinq");
 			return (1);
-		}
-		else
-			str = ft_strsub(str, tmp - str, (str + ft_strlen(str)) - tmp);
+
 	}
 
 
 // BOUCLE READ //
-	// else
-	// {
+
 		buf = ft_strnew(BUFF_SIZE);
 		if (!str)
 			str = ft_strnew(0);
+			pte("six");
+
 		while ((ret = read(fd, buf, BUFF_SIZE)) != 0)
 		{
+			pte("sept");
+
 			if (ret == -1)
 				return (-1);
-			// buf[ret] = '\0';
+			buf[ret] = '\0';
 			if (str && (tmp = ft_strchr(buf, '\n')))
 			{
+				pte("huit");
 				str = ft_strjoin(str, buf);
+				pte("neuf");
 				*line = ft_strsub(str, 0, tmp - str);
+				pte("dix");
 				str = ft_strsub(buf, tmp - buf, (buf + ret) - tmp);
+				pte("onze");
 				return (1);
 			}
 			else if ((tmp = ft_strchr(buf, '\n')))
 			{	
+				pte("douze");
 				*line = ft_strsub(buf, 0, tmp - buf);
 				str = ft_strsub(buf, tmp - buf, (buf + ret) - tmp);
 				return (1);
@@ -74,14 +75,6 @@ int			get_next_line(int const fd, char **line)
 				}
 			
 		}
-		// pte(str);
-	// 	if (resolve_line(&str, line))
-	// 		return (1);
-	// 	else
-	// 	{
-	// 		*line = str;
-	// 		return (line ? 1 : 0);
-	// 	}
-	// }
+
 	return (0);
 }

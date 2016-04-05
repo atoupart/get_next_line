@@ -20,7 +20,7 @@ int			main(int argc, char **argv)
 	int		recup = 1;
 
 	fd = open(argv[1], O_RDONLY);
-	while (i != 3 && recup != 0)
+	while (i != 6 && recup != 0)
 	{
 		recup = get_next_line(fd, &line);
 		i++;
