@@ -16,65 +16,72 @@ int			get_next_line(int const fd, char **line)
 {
 	int				ret;
 	char			*buf;
-	static char		*tmp;
 	static char		*str;
-	int				i;
+	char			*tmp;
 // gerer les cas d'erreurs //
 	if (line == NULL || fd < 0)
 		return (-1);
 
 
 // verifier les \n  dans la static str avant de read //
-	i = 0;
-	if (tmp)
+	// if (str && ft_strchr(str, '\n'))
+	// {
+	// 	pte("pass");
+	// 	if (resolve_line(&str, line))
+	// 		return (1);
+	// }
+	if (str)
 	{
-		while (tmp == '\n')
+		if ((tmp = ft_strchr(str, '\n')))
 		{
-			if (*(tmp + 1) == '\n')    voici ou j'en suis.  get_next_line gere les lignes vide et j'en etait
-				a elucider ce changement
-			bouh !
-				*line = tmp;
+			*line = ft_strsub(str, 0, tmp - str);
+			str = ft_strsub(str, tmp - str, (str + ft_strlen(str)) - tmp);
 			return (1);
 		}
-		// str = tmp;
-	} 
-	// if (ft_strchr(str, '\n'))
-	// {
-	// 	while (str[i] != *tmp)
-	// 	{
-	// 		(*line)[i] = str[i];
-	// 		i++;
-	// 	}
-	// 	return (1);
-	// }
-
-
-	buf = ft_strnew(BUFF_SIZE);
-	if (!str)
-	{
-		str = ft_strnew(0);
+		else
+			str = ft_strsub(str, tmp - str, (str + ft_strlen(str)) - tmp);
 	}
+
+
 // BOUCLE READ //
-	while ((ret = read(fd, buf, BUFF_SIZE)) == BUFF_SIZE)
-	{
-		if (ret == -1)
-			return (-1);
-		str = ft_strjoin(str, buf);   //peutetre ensuite strdel(buf);
-		if ((tmp = ft_strchr(str, '\n')))
-			break ;
-	}
-
-//  FINALISATION TRANSFERT //
-	if (ret != 0)
-		str = ft_strjoin(str, buf);
-	i = -1;
-	*line = ft_strnew(ft_strlen(str));
-	if (ret == BUFF_SIZE)              // --------------sert uniquement a eviter de renvoyer '\n'
-		while(str[++i] != '\n')
-			(*line)[i] = str[i];
-	else
-		*line = str;
-	if (ret != BUFF_SIZE)
-		return (0);
-	return (1);
+	// else
+	// {
+		buf = ft_strnew(BUFF_SIZE);
+		if (!str)
+			str = ft_strnew(0);
+		while ((ret = read(fd, buf, BUFF_SIZE)) != 0)
+		{
+			if (ret == -1)
+				return (-1);
+			// buf[ret] = '\0';
+			if (str && (tmp = ft_strchr(buf, '\n')))
+			{
+				str = ft_strjoin(str, buf);
+				*line = ft_strsub(str, 0, tmp - str);
+				str = ft_strsub(buf, tmp - buf, (buf + ret) - tmp);
+				return (1);
+			}
+			else if ((tmp = ft_strchr(buf, '\n')))
+			{	
+				*line = ft_strsub(buf, 0, tmp - buf);
+				str = ft_strsub(buf, tmp - buf, (buf + ret) - tmp);
+				return (1);
+			}
+			else  //sert uniquement pour la derniere ligne
+				{
+					*line = ft_strjoin(str, buf);
+					return (0);
+				}
+			
+		}
+		// pte(str);
+	// 	if (resolve_line(&str, line))
+	// 		return (1);
+	// 	else
+	// 	{
+	// 		*line = str;
+	// 		return (line ? 1 : 0);
+	// 	}
+	// }
+	return (0);
 }

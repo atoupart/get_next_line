@@ -1,33 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   resolve_ligne.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atoupart <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/02/09 17:39:54 by atoupart          #+#    #+#             */
-/*   Updated: 2016/02/25 17:23:36 by atoupart         ###   ########.fr       */
+/*   Created: 2016/04/05 11:42:18 by atoupart          #+#    #+#             */
+/*   Updated: 2016/04/05 11:42:22 by atoupart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int			main(int argc, char **argv)
+int		resolve_line(char **str, char **line)
 {
-	int		i = 0;
-	char	*line;
-	int		fd;
-	int		recup = 1;
+	char *tmp;
 
-	fd = open(argv[1], O_RDONLY);
-	while (i != 3 && recup != 0)
+	if ((tmp = ft_strchr(*str, '\n')))
 	{
-		recup = get_next_line(fd, &line);
-		i++;
-		pts("line ");ptn(i);pts(" =");ptcn;pts("''");pts(line);pte("''");;
-		
+		*tmp = '\0';
+		*line = ft_strdup(*str);
+		return (1);
 	}
-	close(fd);
-	return (0);
-}
+	else
+		return (0);
+	
 
+}
