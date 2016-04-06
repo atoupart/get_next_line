@@ -18,7 +18,7 @@
 # include <sys/types.h>
 # include <fcntl.h>
 
-# define BUFF_SIZE 15
+# define BUFF_SIZE 9999999
 
 # define ptc ft_putchar
 # define ptn ft_putnbr

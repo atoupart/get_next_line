@@ -17,14 +17,14 @@ int			main(int argc, char **argv)
 	int		i = 0;
 	char	*line;
 	int		fd;
-	int		recup = 1;
+	int		gnl = 1;
 
 	fd = open(argv[1], O_RDONLY);
-	while (i != 6 && recup != 0)
+	while (i < 6 && gnl > 0)
 	{
-		recup = get_next_line(fd, &line);
+		gnl = get_next_line(fd, &line);
 		i++;
-		pts("line ");ptn(i);pts(" =");ptcn;pts("''");pts(line);pte("''");;
+		pts("gnl = ");ptn(gnl);pts(" && line ");ptn(i);pts(" = ");pts("''");pts(line);pte("''");
 		
 	}
 	close(fd);
