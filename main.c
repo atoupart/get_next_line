@@ -20,7 +20,7 @@ int			main(int argc, char **argv)
 	int		gnl = 1;
 
 	fd = open(argv[1], O_RDONLY);
-	while (gnl > 0 && i < 20)
+	while (gnl > 0)
 	{
 		gnl = get_next_line(fd, &line);
 		i++;

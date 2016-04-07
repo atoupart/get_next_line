@@ -18,15 +18,8 @@
 # include <sys/types.h>
 # include <fcntl.h>
 
-# define BUFF_SIZE 4
-
-# define ptc ft_putchar
-# define ptn ft_putnbr
-# define pts ft_putstr
-# define pte ft_putendl
-# define ptcn ft_putchar('\n')
+# define BUFF_SIZE 1000
 
 int		get_next_line(int const fd, char **line);
-int		resolve_line(char **str, char **line);
 
 #endif
