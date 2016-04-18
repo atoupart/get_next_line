@@ -33,22 +33,17 @@ int			get_next_line(int const fd, char **line)
 		buf[ret] = '\0';
 		if (!str[fd])
 			str[fd] = ft_strnew(0);
-		tmp = str[fd];
-		str[fd] = ft_strjoin(str[fd], buf);
-		ft_strdel(&tmp);
+		str[fd] = ft_strjoin_f(&str[fd], buf);
 		if ((tmp = ft_strchr(str[fd], '\n')))
 		{
 			*line = ft_strsub(str[fd], 0, tmp - str[fd]);
-			tmp = ft_strsub_f(&str[fd], tmp + 1 - str[fd], (str[fd] + ft_strlen(str[fd])) - tmp);
-
-			str[fd] = tmp;
+			str[fd] = ft_strsub_f(&str[fd], tmp + 1 - str[fd], (str[fd] + ft_strlen(str[fd])) - tmp);
 			ft_strdel(&buf);
 			return (1);
 		}
 		else if (ret != BUFF_SIZE)
 		{
-			*line = ft_strdup(str[fd]);
-			ft_strdel(&str[fd]);
+			*line = ft_strdup_f(&str[fd]);
 			ft_strdel(&buf);
 			return (1);
 		}
@@ -56,8 +51,7 @@ int			get_next_line(int const fd, char **line)
 	ft_strdel(&buf);
 	if (str[fd] && ret == 0 && *str[fd] != '\n' && *str[fd] != '\0')
 	{
-		*line = ft_strdup(str[fd]);
-		ft_strdel(&str[fd]);
+		*line = ft_strdup_f(&str[fd]);
 		return (1);
 	}
 	if (ret == -1)

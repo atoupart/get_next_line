@@ -6,7 +6,7 @@
 #    By: atoupart <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/02 10:08:38 by atoupart          #+#    #+#              #
-#    Updated: 2016/01/15 10:53:16 by atoupart         ###   ########.fr        #
+#    Updated: 2016/04/16 19:07:02 by atoupart         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,7 @@ SRCS	= ft_atoi.c\
 		ft_strcmp.c\
 		ft_strcpy.c\
 		ft_strdup.c\
+		ft_strdup_f.c\
 		ft_strlcat.c\
 		ft_strlen.c\
 		ft_strncmp.c\
@@ -57,10 +58,12 @@ SRCS	= ft_atoi.c\
 		ft_strmap.c\
 		ft_strmapi.c\
 		ft_strsub.c\
+		ft_strsub_f.c\
 		ft_strclr.c\
 		ft_striter.c\
 		ft_striteri.c\
 		ft_strjoin.c\
+		ft_strjoin_f.c\
 		ft_putchar_fd.c\
 		ft_putstr_fd.c\
 		ft_putendl_fd.c\

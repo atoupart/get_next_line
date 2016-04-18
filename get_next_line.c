@@ -12,62 +12,66 @@
 
 #include "get_next_line.h"
 
+int			before_while(char **str, char **line)
+{
+	char *tmp;
+
+	if (*str && (tmp = ft_strchr(*str, '\n')))
+	{
+		*line = ft_strsub(*str, 0, tmp - *str);
+		*str = ft_strsub_f(str, tmp + 1 - *str, (*str + ft_strlen(*str)) - tmp);
+		return (1);
+	}
+	*line = NULL;
+	return (0);
+}
+
+int			inside_while(int ret, char **buf, char **str, char **line)
+{
+	char *tmp;
+
+	buf[0][ret] = '\0';
+	*str = ft_strjoin_f(str, *buf);
+	if ((tmp = ft_strchr(*str, '\n')))
+	{
+		*line = ft_strsub(*str, 0, tmp - *str);
+		*str = ft_strsub_f(str, tmp + 1 - *str, (*str + ft_strlen(*str)) - tmp);
+		ft_strdel(buf);
+		return (1);
+	}
+	else if (ret != BUFF_SIZE)
+	{
+		*line = ft_strdup_f(str);
+		ft_strdel(buf);
+		return (1);
+	}
+	return (0);
+}
+
 int			get_next_line(int const fd, char **line)
 {
 	int				ret;
 	char			*buf;
-	static char		*str;
-	char			*tmp;
+	static char		*str[OPEN_MAX];
 
 	if (line == NULL || fd < 0)
 		return (-1);
-	if (str && (tmp = ft_strchr(str, '\n')))
-	{
-		*line = ft_strsub(str, 0, tmp - str);
-		str = ft_strsub(str, tmp + 1 - str, (str + ft_strlen(str)) - tmp);
+	if (before_while(&(str[fd]), line))
 		return (1);
-	}
+	if (!str[fd])
+		str[fd] = ft_strnew(0);
 	buf = ft_strnew(BUFF_SIZE);
-while ((ret = read(fd, buf, BUFF_SIZE)) > 0)
-	{
-		if (!str)
-			str = ft_strnew(0);
-
-		str = ft_strjoin(str, buf);
-
-		bzero(buf, BUFF_SIZE);
-
-		if ((tmp = ft_strchr(str, '\n')))
-		{
-			*line = ft_strsub(str, 0, tmp - str);
-
-			buf = ft_strsub(str, tmp + 1 - str, (str + ft_strlen(str)) - tmp);
-			if (*buf != '\0') // viens d'etre rajouter
-			{
-				str = buf;
-			}
-			else
-				ft_strdel(&str);
+	while ((ret = read(fd, buf, BUFF_SIZE)) > 0)
+		if (str[fd] && inside_while(ret, &buf, &(str[fd]), line))
 			return (1);
-		}
-		else if (ret != BUFF_SIZE)
-		{
-			*line = str;
-
-			ft_strdel(&str);
-			return (1);
-		}
-	}
-
-
-	if (str && ret == 0 && *str != '\n' && *str != '\0')
+	ft_strdel(&buf);
+	if (str[fd] && ret == 0 && *str[fd] != '\n' && *str[fd] != '\0')
 	{
-		*line = str;
-
-		ft_strdel(&str);
+		*line = ft_strdup_f(&str[fd]);
 		return (1);
-	}	
+	}
 	if (ret == -1)
 		return (-1);
+	ft_strdel(&str[fd]);
 	return (0);
 }

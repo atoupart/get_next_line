@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstlen.c                                        :+:      :+:    :+:   */
+/*   ft_strsub_f.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atoupart <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/11 20:40:12 by atoupart          #+#    #+#             */
-/*   Updated: 2015/12/11 20:45:20 by atoupart         ###   ########.fr       */
+/*   Created: 2016/04/16 15:01:24 by atoupart          #+#    #+#             */
+/*   Updated: 2016/04/16 15:01:30 by atoupart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t		ft_lstlen(t_list *lst)
+char	*ft_strsub_f(char **str, unsigned int start, size_t n)
 {
-	size_t i;
+	char	*tmp;
 
-	i = 0;
-	while (lst->next)
-	{
-		lst = lst->next;
-		i++;
-	}
-	return (i);
+	if (!*str)
+		return (NULL);
+	tmp = ft_strnew(n);
+	if (tmp)
+		ft_strncpy(tmp, *str + start, n);
+	ft_strdel(str);
+	return (tmp);
 }
